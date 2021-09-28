@@ -19,7 +19,7 @@ public class ServiceCasdastro {
 	RestTemplate restTemplate = new RestTemplate();
 	
 	public List<Cadastro> obterTodos() {
-		String URL = "http://34.135.134.204:8080/cadastramento";
+		String URL = "http://35.193.116.145/cadastramento";
 		
 		HttpHeaders header =  new HttpHeaders();
 		header.set("ContentType","application/json");

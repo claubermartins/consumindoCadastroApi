@@ -12,7 +12,7 @@ import com.consumindocadastroapi.model.Cadastro;
 import com.consumindocadastroapi.service.ServiceCasdastro;
 
 @RestController
-@RequestMapping("cadastro")
+@RequestMapping("consumindoCadastroApi")
 public class ControllerCadastro {
 	
 	private ServiceCasdastro serviceCadastro;
@@ -30,8 +30,5 @@ public class ControllerCadastro {
 		return ResponseEntity.ok(cadastros);
 		
 	}
-	
-	
-	
 
 }
