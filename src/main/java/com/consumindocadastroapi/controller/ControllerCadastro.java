@@ -1,6 +1,7 @@
 package com.consumindocadastroapi.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import com.consumindocadastroapi.model.Cadastro;
 import com.consumindocadastroapi.service.ServiceCasdastro;
 
 @RestController
-@RequestMapping("cadastro")
+@RequestMapping("consumindoCadastroApi")
 public class ControllerCadastro {
 	
 	private ServiceCasdastro serviceCadastro;
@@ -21,13 +22,17 @@ public class ControllerCadastro {
 	public ControllerCadastro(ServiceCasdastro serviceCadastro) {
 		this.serviceCadastro = serviceCadastro;
 	}
-	
-	
-	@GetMapping
-	ResponseEntity<List<Cadastro>> obterTodos(){
-		
-		List<Cadastro> cadastros =  serviceCadastro.obterTodos();
-		return ResponseEntity.ok(cadastros);
+
+    @GetMapping
+    ResponseEntity<List<Cadastro>> obterTodos() {
+        List<Cadastro> cadastros = serviceCadastro.obterTodos();
+        return ResponseEntity.ok(cadastros);
+    }
+
+	@GetMapping("/download")
+	ResponseEntity<List<Cadastro>> download(){
+		List <Cadastro> cadastros = serviceCadastro.download();
+ 		return ResponseEntity.ok(cadastros);
 		
 	}
 	

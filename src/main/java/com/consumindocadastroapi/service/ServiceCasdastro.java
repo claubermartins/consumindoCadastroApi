@@ -1,34 +1,42 @@
 package com.consumindocadastroapi.service;
 
-import java.util.Arrays;
-import java.util.List;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
+import com.consumindocadastroapi.api.Api;
 import com.consumindocadastroapi.model.Cadastro;
+import com.consumindocadastroapi.repository.RepositoryCadastro;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServiceCasdastro {
-	
-	RestTemplate restTemplate = new RestTemplate();
-	
-	public List<Cadastro> obterTodos() {
-		String URL = "http://34.135.134.204:8080/cadastramento";
-		
-		HttpHeaders header =  new HttpHeaders();
-		header.set("ContentType","application/json");
-		HttpEntity<String> entity = new HttpEntity<>(header);
-		
-		ResponseEntity<Cadastro[]> pessoas = restTemplate.exchange(URL, HttpMethod.GET, entity,Cadastro[].class);
-		
-		return Arrays.asList(pessoas.getBody());
-		
-	}
+    private RepositoryCadastro repositoryCadastro;
 
+    @Autowired
+    public ServiceCasdastro(RepositoryCadastro repositoryCadastro) {
+        this.repositoryCadastro = repositoryCadastro;
+    }
+
+    public List<Cadastro> obterTodos() {
+        return repositoryCadastro.findAll();
+    }
+
+    public Optional<Cadastro> buscaPorId(Long id) {
+        return repositoryCadastro.findById(id);
+    }
+
+    public Optional<Cadastro> buscarPorNome(String nome) {
+        return repositoryCadastro.findByNameIgnoreCase(nome);
+    }
+
+    //espaço pro crud
+    public List<Cadastro> download() {
+        Api api = new Api();
+        api.obterTodos();
+        List<Cadastro> cadastros = api.obterTodos();
+        return repositoryCadastro.saveAll(cadastros);
+    }
 }
